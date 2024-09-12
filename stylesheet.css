@@ -20,21 +20,32 @@ html, body {
     display: flex;
     flex-direction: column;
     border: 3px solid blue;
+    height: 550px;
+    width: auto;
+    margin-top: 200px;
 }
 .display {
     background-color: darkslategrey;
+    height: 50px;
+    width: auto;
+    margin: 50px;
 }
 .reset {
     display: flex;
     justify-content: center;
     align-items: center;
+    height: 100px;
+    width: auto;
+
 }
 .pad {
     display: flex;
     justify-content: center;
     align-items: center;
+    height: 200px;
 }
 .btnRow {
     display: flex;
     flex-direction: column;
+    
 }
