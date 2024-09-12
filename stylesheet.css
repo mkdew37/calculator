@@ -1,0 +1,40 @@
+html, body {
+    font-family: 'JetBrains Mono NL', monospace;
+    height: 100vh;
+    overflow: hidden;
+    margin: 0;
+    padding: 0;
+}
+
+.main {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-left: auto;
+    margin-right: auto;
+    border: 3px solid red;
+    height: auto;
+    width: 1200px;
+}
+.calculator {
+    display: flex;
+    flex-direction: column;
+    border: 3px solid blue;
+}
+.display {
+    background-color: darkslategrey;
+}
+.reset {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+.pad {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+.btnRow {
+    display: flex;
+    flex-direction: column;
+}
