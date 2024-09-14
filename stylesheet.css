@@ -8,6 +8,7 @@ html, body {
 
 .main {
     display: flex;
+    flex-direction: column;
     justify-content: center;
     align-items: center;
     margin-left: auto;
@@ -16,36 +17,61 @@ html, body {
     height: auto;
     width: 1200px;
 }
+.quote {
+    font-size: 20px;
+    margin-top: 100px;
+}
 .calculator {
     display: flex;
     flex-direction: column;
     border: 3px solid blue;
-    height: 550px;
+    height: 500px;
     width: auto;
     margin-top: 200px;
 }
 .display {
-    background-color: darkslategrey;
+    display: flex;
+    justify-content: flex-end;
+    align-items: center;
+    background-color: lightslategray;
+    color: aliceblue;
+    font-size: 26px;
     height: 50px;
-    width: auto;
-    margin: 50px;
+    width: 250px;
+    margin: 40px;
+    border: 3px solid red;
 }
 .reset {
     display: flex;
-    justify-content: center;
+    justify-content: space-evenly;
     align-items: center;
-    height: 100px;
+    height: 50px;
     width: auto;
-
+    margin: 15px;
+    margin-top: -25px;
+    border: 3px solid red;
+}
+.btnReset {
+    height: 50px;
+    width: 130px;
+    border-radius: 10px;
+}
+.btnReset:hover {
+    background-color: rgba(226, 43, 43, 0.836);
 }
 .pad {
     display: flex;
-    justify-content: center;
+    justify-content: space-evenly;
     align-items: center;
     height: 200px;
+    border: 3px solid greenyellow;
 }
 .btnRow {
     display: flex;
     flex-direction: column;
-    
+    justify-content: space-between;
+    align-content: space-evenly;
+    height: 200px;
+    padding: 5px;
+    border: 3px solid red;
 }
