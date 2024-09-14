@@ -1,5 +1,6 @@
 html, body {
     font-family: 'JetBrains Mono NL', monospace;
+    background-color: aquamarine;
     height: 100vh;
     overflow: hidden;
     margin: 0;
@@ -17,17 +18,29 @@ html, body {
     height: auto;
     width: 1200px;
 }
+.headerQuote {
+    border: 3px solid red;
+}
 .quote {
     font-size: 20px;
     margin-top: 100px;
+    border: 3 px solid red;
+}
+.quoter {
+    font-size: 18px;
+    font-weight: bold;
+    text-align: end;
+    margin-right: 25px;
 }
 .calculator {
     display: flex;
     flex-direction: column;
+    border-radius: 12px;
     border: 3px solid blue;
+    background-color: rgb(25, 121, 108);
     height: 500px;
     width: auto;
-    margin-top: 200px;
+    margin-top: 50px;
 }
 .display {
     display: flex;
@@ -41,26 +54,12 @@ html, body {
     margin: 40px;
     border: 3px solid red;
 }
-.reset {
-    display: flex;
-    justify-content: space-evenly;
-    align-items: center;
-    height: 50px;
-    width: auto;
-    margin: 15px;
-    margin-top: -25px;
-    border: 3px solid red;
-}
-.btnReset {
-    height: 50px;
-    width: 130px;
-    border-radius: 10px;
-}
 .btnReset:hover {
     background-color: rgba(226, 43, 43, 0.836);
 }
 .pad {
     display: flex;
+    flex-direction: column;
     justify-content: space-evenly;
     align-items: center;
     height: 200px;
@@ -68,10 +67,8 @@ html, body {
 }
 .btnRow {
     display: flex;
-    flex-direction: column;
     justify-content: space-between;
     align-content: space-evenly;
     height: 200px;
-    padding: 5px;
     border: 3px solid red;
 }
