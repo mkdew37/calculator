@@ -1,8 +1,11 @@
 //Variables
-let number1 = 0;
-let number2 = 0;
-let operator;
+let number1 = '';
+let number2 = '';
+let operator = '';
 
+//DOM Elements
+const output = document.querySelector('#output');
+output.innerText = '0';
 //Functions
 function add(num1, num2)  {
     return num1 + num2;
@@ -40,3 +43,24 @@ function operate(operator, num1, num2) {
             break;
     }
 }
+
+//Event Listeners
+const buttons = document.querySelectorAll('.btn');
+    for ( let i = 0; i < buttons.length; i++) {
+        buttons[i].addEventListener('click', () => {
+            const buttonValue = buttons[i].innerText;
+            if (output.innerText === '0') {
+                output.innerText = buttonValue
+            } else {
+        output.innerText += buttonValue;
+            }
+        });
+    };
+
+const buttonsErase = document.querySelector('.btn-ac');
+    buttonsErase.addEventListener('click', () => {
+        output.innerText = '0';
+    });
+
+const buttonDelete = document.querySelector('.btn-del');
+
