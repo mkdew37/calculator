@@ -2,12 +2,17 @@
 let number1 = '';
 let number2 = '';
 let operator = '';
+let result = '';
+
+
 
 //DOM Elements
 const output = document.querySelector('#output');
 output.innerText = '0';
 
 //Functions
+
+
 function add(num1, num2)  {
     return num1 + num2;
 }
@@ -75,3 +80,15 @@ buttonDelete.addEventListener('click', () => {
     }
 });
 
+const buttonEqual = document.querySelector('.btnEqual');
+buttonEqual.addEventListener('click', () => {
+   parseEquation(output.innerText);
+    
+});
+
+
+
+function parseEquation(input)    {
+    let equation = input.split('');
+    console.log(equation);
+}
