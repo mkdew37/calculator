@@ -6,6 +6,7 @@ let operator = '';
 //DOM Elements
 const output = document.querySelector('#output');
 output.innerText = '0';
+
 //Functions
 function add(num1, num2)  {
     return num1 + num2;
@@ -57,10 +58,20 @@ const buttons = document.querySelectorAll('.btn');
         });
     };
 
-const buttonsErase = document.querySelector('.btn-ac');
-    buttonsErase.addEventListener('click', () => {
+const buttonErase = document.querySelector('.btn-ac');
+    buttonErase.addEventListener('click', () => {
         output.innerText = '0';
     });
 
 const buttonDelete = document.querySelector('.btn-del');
+buttonDelete.addEventListener('click', () => {
+    if (output.innerText.length === 1)  {
+        output.innerText = '0';
+    }
+    else    {
+        let numberToString = output.innerText.toString();
+        let deleteLast = numberToString.slice(0, numberToString.length - 1);
+        output.innerText = deleteLast;
+    }
+});
 
