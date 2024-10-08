@@ -5,7 +5,7 @@ let num1 = '';
 let num2 = '';
 let operator = '';
 let result = '';
-let currentInput = '';
+let currentResult = '';
 
 
 
@@ -59,16 +59,16 @@ function parseEquation(input)    {
         num1 = equation[0];
         num2 = equation[1];
         operator = '+';
-        result = operate(operator, num1, num2);
-        output.innerText = result;
+        currentResult = operate(operator, num1, num2);
+        output.innerText = currentResult;
     }
     else if (input.includes('-'))    {
         let equation = input.split('-');
         num1 = equation[0];
         num2 = equation[1];
         operator = '-';
-        result = operate(operator, num1, num2);
-        output.innerText = result;
+        currentResult = operate(operator, num1, num2);
+        output.innerText = currentResult;
 }
     else if (input.includes('×'))    {
         input = input.replace(/×/g, '*');
@@ -76,8 +76,8 @@ function parseEquation(input)    {
         num1 = equation[0];
         num2 = equation[1];
         operator = '*';
-        result = operate(operator, num1, num2);
-        output.innerText = result;
+        currentResult = operate(operator, num1, num2);
+        output.innerText = currentResult;
     }
     else if (input.includes('÷'))    {
         input = input.replace(/÷/g, '/');
@@ -86,26 +86,23 @@ function parseEquation(input)    {
         num1 = equation[0];
         num2 = equation[1];
         operator = '/';
-        result = operate(operator, num1, num2);
-        output.innerText = result;
+        currentResult = operate(operator, num1, num2);
+        output.innerText = currentResult;
     }
 }
 
 /*function operatorPressDown(operator)    {
 
-    if (result !== null)    {
-        currentInput = result + operator;
-        output.innerText = currentValue;
-        result = null;
+    if (currentResult !== null)    {
+        result = currentResult + operator;
+        output.innerText = result;
+        currentResult = null;
     }
     else    {
-        result = parseEquation(currentInput);
-        currentInput = '';
-        output.innerText = result + operator;
-
+        currentResult = parseEquation();
+        output.innerText = currentResult;
     }
-}
-*/
+}*/
 
 //Event Listeners
 const buttons = document.querySelectorAll('.btn');
@@ -149,6 +146,5 @@ buttonEqual.addEventListener('click', () => {
 /*const plusBtn = document.querySelector('#plusBtn');
 plusBtn.addEventListener('click', ()    => {
     operatorPressDown();
-})
-*/
+})*/
 });
