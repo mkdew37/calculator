@@ -54,12 +54,14 @@ function operate(operator, num1, num2) {
 
 function parseEquation(input)    {
 
+    console.log("Input received:", input);
+
     if (input.includes('+'))    {
         let equation = input.split('+');
         num1 = equation[0];
         num2 = equation[1];
         operator = '+';
-        result = operate(operator, parseInt(num1), parseInt(num2));
+        result = operate(operator, parseFloat(num1), parseFloat(num2));
         output.innerText = result;
     }
     else if (input.includes('-'))    {
@@ -67,7 +69,7 @@ function parseEquation(input)    {
         num1 = equation[0];
         num2 = equation[1];
         operator = '-';
-        result = operate(operator, parseInt(num1), parseInt(num2));
+        result = operate(operator, parseFloat(num1), parseFloat(num2));
         output.innerText = result;
 }
     else if (input.includes('×'))    {
@@ -76,7 +78,7 @@ function parseEquation(input)    {
         num1 = equation[0];
         num2 = equation[1];
         operator = '*';
-        result = operate(operator, parseInt(num1), parseInt(num2));
+        result = operate(operator, parseFloat(num1), parseFloat(num2));
         output.innerText = result;
     }
     else if (input.includes('÷'))    {
@@ -85,7 +87,7 @@ function parseEquation(input)    {
         num1 = equation[0];
         num2 = equation[1];
         operator = '/';
-        result = operate(operator, parseInt(num1), parseInt(num2));
+        result = operate(operator, parseFloat(num1), parseFloat(num2));
         output.innerText = result;
     }
 }
