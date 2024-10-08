@@ -1,6 +1,8 @@
+document.addEventListener('DOMContentLoaded', function() {
+
 //Variables
-let number1 = '';
-let number2 = '';
+let num1 = '';
+let num2 = '';
 let operator = '';
 let result = '';
 
@@ -50,6 +52,44 @@ function operate(operator, num1, num2) {
     }
 }
 
+function parseEquation(input)    {
+
+    if (input.includes('+'))    {
+        let equation = input.split('+');
+        num1 = equation[0];
+        num2 = equation[1];
+        operator = '+';
+        result = operate(operator, parseInt(num1), parseInt(num2));
+        output.innerText = result;
+    }
+    else if (input.includes('-'))    {
+        let equation = input.split('-');
+        num1 = equation[0];
+        num2 = equation[1];
+        operator = '-';
+        result = operate(operator, parseInt(num1), parseInt(num2));
+        output.innerText = result;
+}
+    else if (input.includes('×'))    {
+        input = input.replace(/×/g, '*');
+        let equation = input.split('*');
+        num1 = equation[0];
+        num2 = equation[1];
+        operator = '*';
+        result = operate(operator, parseInt(num1), parseInt(num2));
+        output.innerText = result;
+    }
+    else if (input.includes('÷'))    {
+        input = input.replace(/÷/g, '/');
+        let equation = input.split('/');
+        num1 = equation[0];
+        num2 = equation[1];
+        operator = '/';
+        result = operate(operator, parseInt(num1), parseInt(num2));
+        output.innerText = result;
+    }
+}
+
 //Event Listeners
 const buttons = document.querySelectorAll('.btn');
     for ( let i = 0; i < buttons.length; i++) {
@@ -66,8 +106,8 @@ const buttons = document.querySelectorAll('.btn');
 const buttonErase = document.querySelector('.btn-ac');
     buttonErase.addEventListener('click', () => {
         output.innerText = '0';
-        number1 = '';
-        number2 = '';
+        num1 = '';
+        num2 = '';
         operator = '';
         result = '';
     });
@@ -87,23 +127,6 @@ buttonDelete.addEventListener('click', () => {
 const buttonEqual = document.querySelector('.btnEqual');
 buttonEqual.addEventListener('click', () => {
    parseEquation(output.innerText);
-    
 });
 
-
-
-function parseEquation(input)    {
-
-    if (input.includes('+'))    {
-        let equation = input.split('+');
-        num1 = equation[0];
-        num2 = equation[1];
-        operator = '+';
-        return {
-            num1,
-            num2, 
-            operator
-        }
-    }
-    operate();
-}
+});
