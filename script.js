@@ -83,6 +83,7 @@ function parseEquation(input)    {
     }
     else if (input.includes('÷'))    {
         input = input.replace(/÷/g, '/');
+        if (input.includes('0') )   return alert("Hey! I see what you did there, you tried to break my calculator.\nPlease do not try and divide anything by 0.");
         let equation = input.split('/');
         num1 = equation[0];
         num2 = equation[1];
