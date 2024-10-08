@@ -66,6 +66,10 @@ const buttons = document.querySelectorAll('.btn');
 const buttonErase = document.querySelector('.btn-ac');
     buttonErase.addEventListener('click', () => {
         output.innerText = '0';
+        number1 = '';
+        number2 = '';
+        operator = '';
+        result = '';
     });
 
 const buttonDelete = document.querySelector('.btn-del');
@@ -89,6 +93,17 @@ buttonEqual.addEventListener('click', () => {
 
 
 function parseEquation(input)    {
-    let equation = input.split('');
-    console.log(equation);
+
+    if (input.includes('+'))    {
+        let equation = input.split('+');
+        num1 = equation[0];
+        num2 = equation[1];
+        operator = '+';
+        return {
+            num1,
+            num2, 
+            operator
+        }
+    }
+    operate();
 }
