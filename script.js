@@ -5,15 +5,15 @@ let num1 = '';
 let num2 = '';
 let operator = '';
 let result = '';
+let currentInput = '';
 
 
 
 //DOM Elements
-const output = document.querySelector('#output');
+const output = document.getElementById('output');
 output.innerText = '0';
 
 //Functions
-
 
 function add(num1, num2)  {
     return num1 + num2;
@@ -35,33 +35,31 @@ function operate(operator, num1, num2) {
     switch (operator)   {
 
         case '+':
-            return add(num1, num2);
+            return add(parseFloat(num1), parseFloat(num2));
             break;
 
         case '-':
-            return subtract(num1, num2);
+            return subtract(parseFloat(num1), parseFloat(num2));
             break;
 
         case '*':
-            return multiply(num1, num2);
+            return multiply(parseFloat(num1), parseFloat(num2));
             break;
 
         case '/':
-            return divide(num1, num2);
+            return divide(parseFloat(num1), parseFloat(num2));
             break;
     }
 }
 
 function parseEquation(input)    {
 
-    console.log("Input received:", input);
-
     if (input.includes('+'))    {
         let equation = input.split('+');
         num1 = equation[0];
         num2 = equation[1];
         operator = '+';
-        result = operate(operator, parseFloat(num1), parseFloat(num2));
+        result = operate(operator, num1, num2);
         output.innerText = result;
     }
     else if (input.includes('-'))    {
@@ -69,7 +67,7 @@ function parseEquation(input)    {
         num1 = equation[0];
         num2 = equation[1];
         operator = '-';
-        result = operate(operator, parseFloat(num1), parseFloat(num2));
+        result = operate(operator, num1, num2);
         output.innerText = result;
 }
     else if (input.includes('×'))    {
@@ -78,7 +76,7 @@ function parseEquation(input)    {
         num1 = equation[0];
         num2 = equation[1];
         operator = '*';
-        result = operate(operator, parseFloat(num1), parseFloat(num2));
+        result = operate(operator, num1, num2);
         output.innerText = result;
     }
     else if (input.includes('÷'))    {
@@ -88,10 +86,26 @@ function parseEquation(input)    {
         num1 = equation[0];
         num2 = equation[1];
         operator = '/';
-        result = operate(operator, parseFloat(num1), parseFloat(num2));
+        result = operate(operator, num1, num2);
         output.innerText = result;
     }
 }
+
+/*function operatorPressDown(operator)    {
+
+    if (result !== null)    {
+        currentInput = result + operator;
+        output.innerText = currentValue;
+        result = null;
+    }
+    else    {
+        result = parseEquation(currentInput);
+        currentInput = '';
+        output.innerText = result + operator;
+
+    }
+}
+*/
 
 //Event Listeners
 const buttons = document.querySelectorAll('.btn');
@@ -132,4 +146,9 @@ buttonEqual.addEventListener('click', () => {
    parseEquation(output.innerText);
 });
 
+/*const plusBtn = document.querySelector('#plusBtn');
+plusBtn.addEventListener('click', ()    => {
+    operatorPressDown();
+})
+*/
 });
