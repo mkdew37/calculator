@@ -4,17 +4,20 @@ document.addEventListener('DOMContentLoaded', function() {
 let num1 = '';
 let num2 = '';
 let operator = '';
-let result = '';
 let currentResult = '';
 let currentEquation = '';
 
+const validEquation = /^\d+(\s*[\+\-\*\/]\s*\d+)+$/;
 const operators = ['+', '-', '×', '÷' ];
 
 //DOM Elements
 const output = document.getElementById('output');
 output.innerText = '0';
 
-//Functionsconsole.log(buttonValue);
+//Functions
+function add(num1, num2)    {
+    return num1 + num2;
+}
 
 function subtract(num1, num2)   {
     return num1 - num2;
@@ -30,19 +33,15 @@ function divide(num1, num2) {
 
 function operate(operator, num1, num2) {
     switch (operator)   {
-
         case '+':
             return add(parseFloat(num1), parseFloat(num2));
             break;
-
         case '-':
             return subtract(parseFloat(num1), parseFloat(num2));
             break;
-
         case '*':
             return multiply(parseFloat(num1), parseFloat(num2));
             break;
-
         case '/':
             return divide(parseFloat(num1), parseFloat(num2));
             break;
@@ -86,12 +85,11 @@ function parseEquation(input)    {
         currentResult = operate(operator, num1, num2);
         output.innerText = currentResult;
     }
+};
+
+function isValidEquation(testEquation)  {
+    return validEquation.test(testEquation);
 }
-
-function operatorPressDown(operator)    {
-
-}
-
 //Event Listeners
 const buttons = document.querySelectorAll('.btn');
     for ( let i = 0; i < buttons.length; i++) {
@@ -133,8 +131,13 @@ buttonEqual.addEventListener('click', () => {
    parseEquation(output.innerText);
 });
 
-const plusBtn = document.querySelector('#plusBtn');
-plusBtn.addEventListener('click', ()    => {
-   
+const opBtn = document.querySelector('#opBtn');
+opBtn.addEventListener('click', ()    => {
+    console.log(currentEquation);
 })
+
 });
+
+
+
+
