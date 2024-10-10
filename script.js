@@ -92,10 +92,10 @@ function isValidEquation(testEquation)  {
     return validEquation.test(testEquation);
 }
 //Event Listeners
-const buttons = document.querySelectorAll('.btn');
-    for ( let i = 0; i < buttons.length; i++) {
-        buttons[i].addEventListener('click', () => {
-            let buttonValue = buttons[i].innerText;
+const numBtn = document.querySelectorAll('.numBtn');
+    for ( let i = 0; i < numBtn.length; i++) {
+        numBtn[i].addEventListener('click', () => {
+            let buttonValue = numBtn[i].innerText;
             if (output.innerText === '0') {
                 output.innerText = buttonValue;
                 currentEquation = buttonValue;
@@ -104,9 +104,24 @@ const buttons = document.querySelectorAll('.btn');
         currentEquation += buttonValue;
             }
             clickOperator(currentEquation);
-            console.log(currentEquation);
         });
     };
+
+const opBtn = document.querySelectorAll('.opBtn');
+    for ( let i =0; i <opBtn.length; i++ )  {
+        opBtn[i].addEventListener('click', ()   =>  {
+            let buttonValue = opBtn[i].innerText;
+            if (output.innerText === '0') {
+                output.innerText = buttonValue;
+                currentEquation = buttonValue;
+            } else {
+        output.innerText += buttonValue;
+        currentEquation += buttonValue;
+            }
+            clickOperator(currentEquation);
+            calculateOrNot(currentEquation);
+        })
+    }
 
 const buttonErase = document.querySelector('.btn-ac');
     buttonErase.addEventListener('click', () => {
@@ -114,7 +129,9 @@ const buttonErase = document.querySelector('.btn-ac');
         num1 = '';
         num2 = '';
         operator = '';
-        result = '';
+        currentEquation = '';
+        lastActionValidCalculation = false;
+
     });
 
 const buttonDelete = document.querySelector('.btn-del');
@@ -134,8 +151,8 @@ buttonEqual.addEventListener('click', () => {
    parseEquation(output.innerText);
 });
 
-const opBtn = document.querySelector('#opBtn');
-opBtn.addEventListener('click', ()    => {
+const opeBtn = document.querySelector('.opBtn');
+opeBtn.addEventListener('click', ()    => {
     clickOperator(currentEquation);
     calculateOrNot(currentEquation);
 })
@@ -143,19 +160,14 @@ opBtn.addEventListener('click', ()    => {
 function clickOperator(checkEquation)  {
     if (isValidEquation(checkEquation))    {
         lastActionValidCalculation = true;
-        console.log('true');
-    }   else    {
-        console.log('Continue')
-    }
-
-
+    } 
 }
 
 function calculateOrNot(calculate)  {
     if(lastActionValidCalculation === true) {
         parseEquation(calculate);
+        output.innerText = currentResult + '+';
         lastActionValidCalculation = false;
-        
     }
 }
 
