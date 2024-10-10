@@ -6,18 +6,15 @@ let num2 = '';
 let operator = '';
 let result = '';
 let currentResult = '';
+let currentEquation = '';
 
-
+const operators = ['+', '-', '×', '÷' ];
 
 //DOM Elements
 const output = document.getElementById('output');
 output.innerText = '0';
 
-//Functions
-
-function add(num1, num2)  {
-    return num1 + num2;
-}
+//Functionsconsole.log(buttonValue);
 
 function subtract(num1, num2)   {
     return num1 - num2;
@@ -91,28 +88,21 @@ function parseEquation(input)    {
     }
 }
 
-/*function operatorPressDown(operator)    {
+function operatorPressDown(operator)    {
 
-    if (currentResult !== null)    {
-        result = currentResult + operator;
-        output.innerText = result;
-        currentResult = null;
-    }
-    else    {
-        currentResult = parseEquation();
-        output.innerText = currentResult;
-    }
-}*/
+}
 
 //Event Listeners
 const buttons = document.querySelectorAll('.btn');
     for ( let i = 0; i < buttons.length; i++) {
         buttons[i].addEventListener('click', () => {
-            const buttonValue = buttons[i].innerText;
+            let buttonValue = buttons[i].innerText;
             if (output.innerText === '0') {
-                output.innerText = buttonValue
+                output.innerText = buttonValue;
+                currentEquation = buttonValue;
             } else {
         output.innerText += buttonValue;
+        currentEquation += buttonValue;
             }
         });
     };
@@ -143,8 +133,8 @@ buttonEqual.addEventListener('click', () => {
    parseEquation(output.innerText);
 });
 
-/*const plusBtn = document.querySelector('#plusBtn');
+const plusBtn = document.querySelector('#plusBtn');
 plusBtn.addEventListener('click', ()    => {
-    operatorPressDown();
-})*/
+   
+})
 });
