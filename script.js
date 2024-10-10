@@ -6,6 +6,7 @@ let num2 = '';
 let operator = '';
 let currentResult = '';
 let currentEquation = '';
+let lastActionValidCalculation = false;
 
 const validEquation = /^\d+(\s*[\+\-\*\/]\s*\d+)+$/;
 const operators = ['+', '-', '×', '÷' ];
@@ -102,6 +103,8 @@ const buttons = document.querySelectorAll('.btn');
         output.innerText += buttonValue;
         currentEquation += buttonValue;
             }
+            clickOperator(currentEquation);
+            console.log(currentEquation);
         });
     };
 
@@ -133,8 +136,28 @@ buttonEqual.addEventListener('click', () => {
 
 const opBtn = document.querySelector('#opBtn');
 opBtn.addEventListener('click', ()    => {
-    console.log(currentEquation);
+    clickOperator(currentEquation);
+    calculateOrNot(currentEquation);
 })
+
+function clickOperator(checkEquation)  {
+    if (isValidEquation(checkEquation))    {
+        lastActionValidCalculation = true;
+        console.log('true');
+    }   else    {
+        console.log('Continue')
+    }
+
+
+}
+
+function calculateOrNot(calculate)  {
+    if(lastActionValidCalculation === true) {
+        parseEquation(calculate);
+        lastActionValidCalculation = false;
+        
+    }
+}
 
 });
 
