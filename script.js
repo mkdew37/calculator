@@ -4,12 +4,12 @@ document.addEventListener('DOMContentLoaded', function() {
 let num1 = '';
 let num2 = '';
 let operator = '';
+let currentOperator = '';
 let currentResult = '';
 let currentEquation = '';
 let lastActionValidCalculation = false;
 
 const validEquation = /^\d+(\s*[\+\-\*\/]\s*\d+)+$/;
-const operators = ['+', '-', '×', '÷' ];
 
 //DOM Elements
 const output = document.getElementById('output');
@@ -51,6 +51,11 @@ function operate(operator, num1, num2) {
 
 function parseEquation(input)    {
 
+    const lastChar = input.trim().slice(-1);
+    if (['+', '-', '*', '/'].includes(lastChar)) {
+        input = input.trim().slice(0, -1); // Remove last operator if it's not followed by a number
+    }
+
     if (input.includes('+'))    {
         let equation = input.split('+');
         num1 = equation[0];
@@ -67,8 +72,8 @@ function parseEquation(input)    {
         currentResult = operate(operator, num1, num2);
         output.innerText = currentResult;
 }
-    else if (input.includes('×'))    {
-        input = input.replace(/×/g, '*');
+    else if (input.includes('*'))    {
+       /* input = input.replace(/×/g, '*');*/
         let equation = input.split('*');
         num1 = equation[0];
         num2 = equation[1];
@@ -76,8 +81,8 @@ function parseEquation(input)    {
         currentResult = operate(operator, num1, num2);
         output.innerText = currentResult;
     }
-    else if (input.includes('÷'))    {
-        input = input.replace(/÷/g, '/');
+    else if (input.includes('/'))    {
+       /* input = input.replace(/÷/g, '/');*/
         if (input.includes('0') )   return alert("Hey! I see what you did there, you tried to break my calculator.\nPlease do not try and divide anything by 0.");
         let equation = input.split('/');
         num1 = equation[0];
@@ -86,6 +91,8 @@ function parseEquation(input)    {
         currentResult = operate(operator, num1, num2);
         output.innerText = currentResult;
     }
+    console.log("Num1:", num1, "Num2:", num2, "Operator:", operator);
+    operator = '';
 };
 
 function isValidEquation(testEquation)  {
@@ -94,8 +101,8 @@ function isValidEquation(testEquation)  {
 //Event Listeners
 const numBtn = document.querySelectorAll('.numBtn');
     for ( let i = 0; i < numBtn.length; i++) {
-        numBtn[i].addEventListener('click', () => {
-            let buttonValue = numBtn[i].innerText;
+        numBtn[i].addEventListener('click', (event) => {
+            let buttonValue = event.target.innerText;
             if (output.innerText === '0') {
                 output.innerText = buttonValue;
                 currentEquation = buttonValue;
@@ -104,23 +111,29 @@ const numBtn = document.querySelectorAll('.numBtn');
         currentEquation += buttonValue;
             }
             clickOperator(currentEquation);
+            console.log(lastActionValidCalculation);
         });
     };
 
 const opBtn = document.querySelectorAll('.opBtn');
     for ( let i =0; i <opBtn.length; i++ )  {
-        opBtn[i].addEventListener('click', ()   =>  {
-            let buttonValue = opBtn[i].innerText;
+        opBtn[i].addEventListener('click', (event)   =>  {
+            let buttonValue = event.target.innerText;
+            
             if (output.innerText === '0') {
                 output.innerText = buttonValue;
                 currentEquation = buttonValue;
+                currentOperator = buttonValue;
             } else {
         output.innerText += buttonValue;
         currentEquation += buttonValue;
+        currentOperator = buttonValue;
             }
             clickOperator(currentEquation);
             calculateOrNot(currentEquation);
+            console.log(lastActionValidCalculation);
         })
+        console.log(operator);
     }
 
 const buttonErase = document.querySelector('.btn-ac');
@@ -130,8 +143,8 @@ const buttonErase = document.querySelector('.btn-ac');
         num2 = '';
         operator = '';
         currentEquation = '';
+        currentOperator = '';
         lastActionValidCalculation = false;
-
     });
 
 const buttonDelete = document.querySelector('.btn-del');
@@ -151,22 +164,17 @@ buttonEqual.addEventListener('click', () => {
    parseEquation(output.innerText);
 });
 
-const opeBtn = document.querySelector('.opBtn');
-opeBtn.addEventListener('click', ()    => {
-    clickOperator(currentEquation);
-    calculateOrNot(currentEquation);
-})
 
 function clickOperator(checkEquation)  {
     if (isValidEquation(checkEquation))    {
         lastActionValidCalculation = true;
-    } 
+    }  
 }
 
 function calculateOrNot(calculate)  {
     if(lastActionValidCalculation === true) {
         parseEquation(calculate);
-        output.innerText = currentResult + '+';
+        output.innerText = currentResult + currentOperator;
         lastActionValidCalculation = false;
     }
 }
