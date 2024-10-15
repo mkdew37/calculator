@@ -36,21 +36,17 @@ function operate(operator, num1, num2) {
     switch (operator)   {
         case '+':
             return add(parseFloat(num1), parseFloat(num2));
-            break;
         case '-':
             return subtract(parseFloat(num1), parseFloat(num2));
-            break;
         case '*':
             return multiply(parseFloat(num1), parseFloat(num2));
-            break;
         case '/':
             return divide(parseFloat(num1), parseFloat(num2));
-            break;
-    }
+   }
 };
 
 function parseEquation(input)    {
-   
+    console.log(input);
     const lastChar = input.trim().slice(-1);
     if (['+', '-', '*', '/'].includes(lastChar)) {
     input = input.trim().slice(0, -1);      // Remove last operator if it's not followed by a number
@@ -63,15 +59,7 @@ function parseEquation(input)    {
         operator = '+';
         currentResult = operate(operator, num1, num2);
         output.innerText = currentResult;
-    }
-    else if (input.includes('-'))    {
-        let equation = input.split('-');
-        num1 = equation[0];
-        num2 = equation[1];
-        operator = '-';
-        currentResult = operate(operator, num1, num2);
-        output.innerText = currentResult;
-}
+    }   
     else if (input.includes('*'))    {
         let equation = input.split('*');
         num1 = equation[0];
@@ -90,13 +78,27 @@ function parseEquation(input)    {
         }
         currentResult = operate(operator, num1, num2);
         output.innerText = currentResult;
+    }  
+    /*else if (input.includes('-'))    {
+        let equation = input.split('-');
+        console.log('Equation:', equation);
+        num1 = equation[0];
+        num2 = equation[1];
+        operator = '-';
+        currentResult = operate(operator, num1, num2);
+        output.innerText = currentResult;
     }
-};
+};*/
 
 function divideByZero(x, y) {
     if (x === '0' || y === '0') {
         output.innerText = '0';
         currentEquation = '';
+        currentResult = '';
+        num1 = '';
+        num2 = '';
+        operator = '';
+        currentOperator = '';
         alert("Hey! I see what you did there, you tried to break my calculator.\nPlease do not try and divide anything by 0.");
         return true;
     }
@@ -106,8 +108,8 @@ function isValidEquation(testEquation)  {
     return validEquation.test(testEquation);
 };
 
-function clickOperator(checkEquation)  {
-    if (isValidEquation(checkEquation))    {
+function checkEquation(equation)  {
+    if (isValidEquation(equation))    {
         lastActionValidCalculation = true;
     }  
 };
@@ -152,7 +154,7 @@ const numBtn = document.querySelectorAll('.numBtn');
                 output.innerText += buttonValue;
                 currentEquation += buttonValue;
             }
-            clickOperator(currentEquation);
+            checkEquation(currentEquation);
         })
     };
 
@@ -160,7 +162,10 @@ const opBtn = document.querySelectorAll('.opBtn');
     for ( let i =0; i <opBtn.length; i++ )  {
         opBtn[i].addEventListener('click', (event)   =>  {
         let buttonValue = event.target.innerText;
-        if (output.innerText === '0') {
+        if (divideByZero(num1, num2))   {
+            return;
+        }
+        else if (output.innerText === '0') {
             output.innerText = buttonValue;
             currentEquation = buttonValue;
             currentOperator = buttonValue;
@@ -169,9 +174,10 @@ const opBtn = document.querySelectorAll('.opBtn');
                 currentEquation += buttonValue;
                 currentOperator = buttonValue;
             }
-        clickOperator(currentEquation);
+        checkEquation(currentEquation);
         calculateValidEquation(output.innerText);  
         currentEquation = output.innerText
+        console.log('Current Equation', currentEquation);
         })
     };
 
@@ -203,6 +209,7 @@ const buttonEqual = document.querySelector('.btnEqual');
 buttonEqual.addEventListener('click', () => {
     parseEquation(output.innerText);
     currentEquation = output.innerText;
+    console.log('Current Equation', currentEquation);
 });
 
 const buttonDot = document.querySelector('#dot');
