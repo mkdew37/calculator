@@ -73,7 +73,6 @@ function parseEquation(input)    {
         output.innerText = currentResult;
 }
     else if (input.includes('*'))    {
-       /* input = input.replace(/×/g, '*');*/
         let equation = input.split('*');
         num1 = equation[0];
         num2 = equation[1];
@@ -82,18 +81,26 @@ function parseEquation(input)    {
         output.innerText = currentResult;
     }
     else if (input.includes('/'))    {
-       /* input = input.replace(/÷/g, '/');*/
-        if (input.includes('0') ) {
-            return alert("Hey! I see what you did there, you tried to break my calculator.\nPlease do not try and divide anything by 0.");
-        }
         let equation = input.split('/');
         num1 = equation[0];
         num2 = equation[1];
         operator = '/';
+        if (divideByZero(num1, num2))   {
+            return;
+        }
         currentResult = operate(operator, num1, num2);
         output.innerText = currentResult;
     }
 };
+
+function divideByZero(x, y) {
+    if (x === '0' || y === '0') {
+        output.innerText = '0';
+        currentEquation = '';
+        alert("Hey! I see what you did there, you tried to break my calculator.\nPlease do not try and divide anything by 0.");
+        return true;
+    }
+}
 
 function isValidEquation(testEquation)  {
     return validEquation.test(testEquation);
@@ -113,21 +120,27 @@ function calculateValidEquation(calculate)  {
     }
 };
 
-/*function negativeNumbers(item)  {
-    if (item.startsWith('-'))    {
-        console.log("Initial item:", item);
-        let equation = item.split('-', 2);
-        console.log("Equation after slice and split:", equation);
-        console.log("First part after slice:", equation[0])
-        num1 = '-' + equation[0].trim();;
-        num2 = equation[1];
-        operator = '-';
-        currentResult = operate(operator, num1, num2);
-        output.innerText = currentResult;
-    }
-};*/
-
 //Event Listeners
+const plusMinusBtn = document.querySelector('.plus-minusBtn');
+plusMinusBtn.addEventListener('click', ()   =>  {
+
+    if (output.innerText.includes('-', 0)) {
+        let str = output.innerText;
+        let arr = Array.from(str).slice(1).join('');
+        output.innerText = arr;
+        return output.innerText;
+    }   else if (output.innerText.length > 1 || output.innerText !== 0)  {
+        let str = output.innerText;
+        let arr = Array.from(str);
+        let addToArr = arr.unshift('-');
+        let revertedString = arr.join('');
+        output.innerText = revertedString;
+        return output.innerText;
+    }   else    {
+        output.innerText = '-';
+        }
+});
+
 const numBtn = document.querySelectorAll('.numBtn');
     for ( let i = 0; i < numBtn.length; i++) {
         numBtn[i].addEventListener('click', (event) => {
@@ -188,7 +201,6 @@ buttonDelete.addEventListener('click', () => {
 
 const buttonEqual = document.querySelector('.btnEqual');
 buttonEqual.addEventListener('click', () => {
- /*   negativeNumbers(output.innerText);*/
     parseEquation(output.innerText);
     currentEquation = output.innerText;
 });
