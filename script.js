@@ -9,7 +9,7 @@ let currentResult = '';
 let currentEquation = '';
 let lastActionValidCalculation = false;
 
-const validEquation = /^-?\d+(\s*[\+\-\*\/]\s*\d+)+$/;
+const validEquation = /^(-?\d+\.?\d*)\s*([\+\-\*\/])\s*(-?\d+\.?\d*)$/;
 
 //DOM Elements
 const output = document.getElementById('output');
@@ -46,8 +46,19 @@ function operate(operator, num1, num2) {
 };
 
 function parseEquation(input)    {
-    const regex = /^(-?\d+)\s*([\+\-\*\/])\s*(-?\d+)$/;
-    console.log(input);
+    const lastChar = input.trim().slice(-1);
+    if (['+', '-', '*', '/'].includes(lastChar)) {
+        input = input.trim().slice(0, -1);
+    }
+    const regex = /^(?<firstNumber>-?\d+\.?\d*)\s*(?<operator>[\+\-\*\/])\s*(?<secondNumber>-?\d+\.?\d*)$/;
+    const match = input.match(regex);
+    if (match)    {
+        num1 = match.groups.firstNumber;
+        num2 = match.groups.secondNumber;
+        operator = match.groups.operator
+    }
+    currentResult = operate(operator, num1, num2);
+    output.innerText = currentResult;
 };
 
 function divideByZero(x, y) {
