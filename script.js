@@ -19,15 +19,12 @@ output.innerText = '0';
 function add(num1, num2)    {
     return num1 + num2;
 }
-
 function subtract(num1, num2)   {
     return num1 - num2;
 }
-
 function multiply(num1, num2)   {
     return num1 * num2;
 }
-
 function divide(num1, num2) {
     return num1/num2;
 };
@@ -57,7 +54,13 @@ function parseEquation(input)    {
         num2 = match.groups.secondNumber;
         operator = match.groups.operator
     }
+    if (divideByZero(num1, num2))   {
+        return;
+    }
     currentResult = operate(operator, num1, num2);
+    if (String(currentResult).includes('.'))    {
+        return output.innerText = currentResult.toFixed(2);
+    }
     output.innerText = currentResult;
 };
 
@@ -88,7 +91,7 @@ function checkEquation(equation)  {
 function calculateValidEquation(calculate)  {
     if(lastActionValidCalculation) {
         parseEquation(output.innerText);
-        output.innerText = currentResult + currentOperator;
+        output.innerText = currentResult.toFixed(1) + currentOperator;
         lastActionValidCalculation = false;
     }
 };
@@ -96,7 +99,6 @@ function calculateValidEquation(calculate)  {
 //Event Listeners
 const plusMinusBtn = document.querySelector('.plus-minusBtn');
 plusMinusBtn.addEventListener('click', ()   =>  {
-
     if (output.innerText.includes('-', 0)) {
         let str = output.innerText;
         let arr = Array.from(str).slice(1).join('');
@@ -126,6 +128,7 @@ const numBtn = document.querySelectorAll('.numBtn');
                 currentEquation += buttonValue;
             }
             checkEquation(currentEquation);
+            console.log(currentEquation);
         })
     };
 
@@ -186,9 +189,4 @@ const buttonDot = document.querySelector('#dot');
 buttonDot.addEventListener('click', ()  =>  {
 buttonDot.setAttribute('disabled', 'disabled');
 });
-
 });
-
-
-
-
