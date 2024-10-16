@@ -46,49 +46,9 @@ function operate(operator, num1, num2) {
 };
 
 function parseEquation(input)    {
+    const regex = /^(-?\d+)\s*([\+\-\*\/])\s*(-?\d+)$/;
     console.log(input);
-    const lastChar = input.trim().slice(-1);
-    if (['+', '-', '*', '/'].includes(lastChar)) {
-    input = input.trim().slice(0, -1);      // Remove last operator if it's not followed by a number
-    }
-
-    if (input.includes('+'))    {
-        let equation = input.split('+');
-        num1 = equation[0];
-        num2 = equation[1];
-        operator = '+';
-        currentResult = operate(operator, num1, num2);
-        output.innerText = currentResult;
-    }   
-    else if (input.includes('*'))    {
-        let equation = input.split('*');
-        num1 = equation[0];
-        num2 = equation[1];
-        operator = '*';
-        currentResult = operate(operator, num1, num2);
-        output.innerText = currentResult;
-    }
-    else if (input.includes('/'))    {
-        let equation = input.split('/');
-        num1 = equation[0];
-        num2 = equation[1];
-        operator = '/';
-        if (divideByZero(num1, num2))   {
-            return;
-        }
-        currentResult = operate(operator, num1, num2);
-        output.innerText = currentResult;
-    }  
-    /*else if (input.includes('-'))    {
-        let equation = input.split('-');
-        console.log('Equation:', equation);
-        num1 = equation[0];
-        num2 = equation[1];
-        operator = '-';
-        currentResult = operate(operator, num1, num2);
-        output.innerText = currentResult;
-    }
-};*/
+};
 
 function divideByZero(x, y) {
     if (x === '0' || y === '0') {
@@ -102,7 +62,7 @@ function divideByZero(x, y) {
         alert("Hey! I see what you did there, you tried to break my calculator.\nPlease do not try and divide anything by 0.");
         return true;
     }
-}
+};
 
 function isValidEquation(testEquation)  {
     return validEquation.test(testEquation);
@@ -131,16 +91,16 @@ plusMinusBtn.addEventListener('click', ()   =>  {
         let arr = Array.from(str).slice(1).join('');
         output.innerText = arr;
         return output.innerText;
-    }   else if (output.innerText.length > 1 || output.innerText !== 0)  {
+    }   else if (output.innerText === '0')    {
+        output.innerText = '-';
+    }   else    {
         let str = output.innerText;
         let arr = Array.from(str);
         let addToArr = arr.unshift('-');
         let revertedString = arr.join('');
         output.innerText = revertedString;
         return output.innerText;
-    }   else    {
-        output.innerText = '-';
-        }
+    }   
 });
 
 const numBtn = document.querySelectorAll('.numBtn');
@@ -177,7 +137,7 @@ const opBtn = document.querySelectorAll('.opBtn');
         checkEquation(currentEquation);
         calculateValidEquation(output.innerText);  
         currentEquation = output.innerText
-        console.log('Current Equation', currentEquation);
+        buttonDot.removeAttribute('disabled');
         })
     };
 
@@ -209,13 +169,13 @@ const buttonEqual = document.querySelector('.btnEqual');
 buttonEqual.addEventListener('click', () => {
     parseEquation(output.innerText);
     currentEquation = output.innerText;
-    console.log('Current Equation', currentEquation);
 });
 
 const buttonDot = document.querySelector('#dot');
 buttonDot.addEventListener('click', ()  =>  {
 buttonDot.setAttribute('disabled', 'disabled');
-})
+});
+
 });
 
 
