@@ -135,6 +135,7 @@ const numBtn = document.querySelectorAll('.numBtn');
             let buttonValue = event.target.innerText;
             if (output.innerText === '0' && buttonValue === '.')    {
                 output.innerText = '0.';
+                return;
             }   
             output.innerText === '0' ?
             initializeInput(buttonValue) : 
@@ -200,7 +201,7 @@ buttonEqual.addEventListener('click', () => {
     checkEquation(output.innerText)
     if (lastActionValidCalculation === true)    {
         parseEquation(output.innerText);
-        currentEquation = output.innerText;
+        equation = output.innerText;
     }   else    {
         output.innerText = '0';
         equation = '';
@@ -212,12 +213,11 @@ buttonEqual.addEventListener('click', () => {
         lastActionValidCalculation = false;
         alert('This is not a valid equation.\nPlease try again.')
     }
-    if (String(result).includes('.'))   {
-        button.Dot.setAttribute('disabled', 'disabled');
-    }
     opBtn.forEach(button => {
         button.removeAttribute('disabled');
     })
+    String(result).includes('.') ? buttonDot.setAttribute('disabled', 'disabled') : 
+                                                    buttonDot.removeAttribute('disabled'); 
 });
 
 const buttonDot = document.querySelector('#dot');
