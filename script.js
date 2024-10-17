@@ -29,7 +29,7 @@ function divide(num1, num2) {
     return num1/num2;
 };
 
-function operate(operator, num1, num2) {
+function performOperation(operator, num1, num2) {
     switch (operator)   {
         case '+':
             return add(parseFloat(num1), parseFloat(num2));
@@ -54,10 +54,10 @@ function parseEquation(input)    {
         num2 = match.groups.secondNumber;
         operator = match.groups.operator
     }
-    if (divideByZero(num1, num2))   {
+    if (checkForDivisionByZero(num1, num2))   {
         return;
     }
-    result = operate(operator, num1, num2);
+    result = performOperation(operator, num1, num2);
     if (String(result).includes('.'))    {
         let roundedResult = Math.round(result * 100) / 100;
         return output.innerText = roundedResult;
@@ -65,7 +65,7 @@ function parseEquation(input)    {
     output.innerText = result
 };
 
-function divideByZero(x, y) {
+function checkForDivisionByZero(x, y) {
     if (x === '0' || y === '0') {
         output.innerText = '0';
         equation = '';
@@ -84,13 +84,13 @@ function isValidEquation(testEquation)  {
     return validEquation.test(testEquation);
 };
 
-function checkEquation(equation)  {
+function validateEquation(equation)  {
     if (isValidEquation(equation))    {
         lastActionValidCalculation = true;
     }
 };
 
-function calculateValidEquation(calculate)  {
+function calculateResultIfValid(calculate)  {
     if(lastActionValidCalculation) {
         parseEquation(equation);
         output.innerText = result + currentOperator;
@@ -98,7 +98,7 @@ function calculateValidEquation(calculate)  {
     }
 };
 
-function initializeInput(buttonValue)   {
+function setInitialInput(buttonValue)   {
     output.innerText = buttonValue;
     equation = buttonValue;
     currentOperator = buttonValue; 
@@ -109,9 +109,8 @@ function addToCurrentInput(buttonValue) {
     equation += buttonValue;
     currentOperator = buttonValue;
 };
-//Event Listeners
-const plusMinusBtn = document.querySelector('.plus-minusBtn');
-plusMinusBtn.addEventListener('click', ()   =>  {
+
+function togglePlusMinusSign()   {
     if (output.innerText.includes('-', 0)) {
         let str = output.innerText;
         let arr = Array.from(str).slice(1).join('');
@@ -127,65 +126,41 @@ plusMinusBtn.addEventListener('click', ()   =>  {
         output.innerText = revertedString;
         return output.innerText;
     }   
-});
+};
 
-const numBtn = document.querySelectorAll('.numBtn');
-    for ( let i = 0; i < numBtn.length; i++) {
-        numBtn[i].addEventListener('click', (event) => {
-            let buttonValue = event.target.innerText;
-            if (output.innerText === '0' && buttonValue === '.')    {
-                output.innerText = '0.';
-                return;
-            }   
-            output.innerText === '0' ?
-            initializeInput(buttonValue) : 
-            addToCurrentInput(buttonValue);
-            checkEquation(equation);
-            opBtn.forEach(button => {
-                button.removeAttribute('disabled');
-            })
-        })
-    };
+function handleNumberButtonClick(event)  {
+    let buttonValue = event.target.innerText;
+    if (output.innerText === '0' && buttonValue === '.')    {
+        output.innerText = '0.';
+        return;
+    }   
+    output.innerText === '0' ?
+    setInitialInput(buttonValue) : 
+    addToCurrentInput(buttonValue);
+    validateEquation(equation);
+    opBtn.forEach(button => {
+        button.removeAttribute('disabled');
+    })
+};
 
-const opBtn = document.querySelectorAll('.opBtn');
-    for ( let i =0; i <opBtn.length; i++ )  {
-        opBtn[i].addEventListener('click', (event)   =>  {
-        let buttonValue = event.target.innerText;
-        if (divideByZero(num1, num2))   {
-            return;
-        } 
-        output.innerText === '0' ?
-        initializeInput(buttonValue) : 
-        addToCurrentInput(buttonValue);
+function handleOperatorButtonClick(event)   {
+    let buttonValue = event.target.innerText;
+    if (checkForDivisionByZero(num1, num2))   {
+        return;
+    } 
+    output.innerText === '0' ?
+    setInitialInput(buttonValue) : 
+    addToCurrentInput(buttonValue);
+    validateEquation(equation);
+    calculateResultIfValid(output.innerText);  
+    equation = output.innerText
+    buttonDot.removeAttribute('disabled');
+    opBtn.forEach(button => {
+        button.setAttribute('disabled', 'disabled');
+    })
+};
 
-        checkEquation(equation);
-        calculateValidEquation(output.innerText);  
-        equation = output.innerText
-        buttonDot.removeAttribute('disabled');
-        opBtn.forEach(button => {
-            button.setAttribute('disabled', 'disabled');
-        })
-        })
-    };
-
-const buttonErase = document.querySelector('.btn-ac');
-    buttonErase.addEventListener('click', () => {
-        output.innerText = '0';
-        num1 = '';
-        num2 = '';
-        operator = '';
-        equation = '';
-        result = '';
-        currentOperator = '';
-        lastActionValidCalculation = false;
-        buttonDot.removeAttribute('disabled')
-        opBtn.forEach(button => {
-            button.removeAttribute('disabled');
-        })
-    });
-
-const buttonDelete = document.querySelector('.btn-del');
-buttonDelete.addEventListener('click', () => {
+function deleteLastCharacter()  {
     if (output.innerText.length === 1)  {
         output.innerText = '0';
     }
@@ -194,11 +169,25 @@ buttonDelete.addEventListener('click', () => {
         let deleteLast = numberToString.slice(0, numberToString.length - 1);
         output.innerText = deleteLast;
     }
-});
+};
 
-const buttonEqual = document.querySelector('.btnEqual');
-buttonEqual.addEventListener('click', () => {
-    checkEquation(output.innerText)
+function clearInputButton() {
+    output.innerText = '0';
+    num1 = '';
+    num2 = '';
+    operator = '';
+    equation = '';
+    result = '';
+    currentOperator = '';
+    lastActionValidCalculation = false;
+    buttonDot.removeAttribute('disabled')
+    opBtn.forEach(button => {
+        button.removeAttribute('disabled');
+    })
+};
+
+function equalButton()  {
+    validateEquation(output.innerText)
     if (lastActionValidCalculation === true)    {
         parseEquation(output.innerText);
         equation = output.innerText;
@@ -218,10 +207,51 @@ buttonEqual.addEventListener('click', () => {
     })
     String(result).includes('.') ? buttonDot.setAttribute('disabled', 'disabled') : 
                                                     buttonDot.removeAttribute('disabled'); 
-});
+};
+//Mouse Event Listeners
 
+//Toggle Plus/Minus
+const plusMinusBtn = document.querySelector('.plus-minusBtn');
+plusMinusBtn.addEventListener('click', ()   =>  {
+    togglePlusMinusSign();
+});
+//Number Buttons
+const numBtn = document.querySelectorAll('.numBtn');
+    for ( let i = 0; i < numBtn.length; i++) {
+        numBtn[i].addEventListener('click', (event) => {
+            handleNumberButtonClick(event);
+        })
+    };
+//Operator Buttons
+const opBtn = document.querySelectorAll('.opBtn');
+    for ( let i =0; i <opBtn.length; i++ )  {
+        opBtn[i].addEventListener('click', (event)   =>  {
+            handleOperatorButtonClick(event);
+        })
+    };
+//Clear Input Button
+const buttonErase = document.querySelector('.btn-ac');
+    buttonErase.addEventListener('click', () => {
+        clearInputButton();
+    });
+//Delete Last Button
+const buttonDelete = document.querySelector('.btn-del');
+buttonDelete.addEventListener('click', () => {
+    deleteLastCharacter();
+});
+// Equal Button
+const buttonEqual = document.querySelector('.btnEqual');
+buttonEqual.addEventListener('click', () => {
+    equalButton();
+});
+//Decimal Button
 const buttonDot = document.querySelector('#dot');
 buttonDot.addEventListener('click', ()  =>  {
 buttonDot.setAttribute('disabled', 'disabled');
 });
+
+//Keyboard Event Listeners
+//Equal Button (Enter)
+        
+
 });
