@@ -9,7 +9,6 @@ let result = '';
 let equation = '';
 let lastActionValidCalculation = false;
 
-const operators = ['+', '-', '*', '/'];
 const validEquation = /^(-?\d+\.?\d*)\s*([\+\-\*\/])\s*(-?\d+\.?\d*)$/;
 
 //DOM Elements
@@ -136,14 +135,15 @@ const numBtn = document.querySelectorAll('.numBtn');
             let buttonValue = event.target.innerText;
             if (output.innerText === '0' && buttonValue === '.')    {
                 output.innerText = '0.';
-            }   else if (output.innerText === '0') {
-                output.innerText = buttonValue;
-                equation = buttonValue;
-            }     else {
-                    output.innerText += buttonValue;
-                    equation += buttonValue;
             }
+            output.innerText === '0' ?
+            initializeInput(buttonValue) : 
+            addToCurrentInput(buttonValue);
             checkEquation(equation);
+            opBtn.forEach(button => {
+                button.removeAttribute('disabled', 'disabled');
+                button.style.backgroundColor = 'rgb(61, 207, 207)';
+            })
         })
     };
 
@@ -162,7 +162,11 @@ const opBtn = document.querySelectorAll('.opBtn');
         calculateValidEquation(output.innerText);  
         equation = output.innerText
         buttonDot.removeAttribute('disabled');
-        });
+        opBtn.forEach(button => {
+            button.setAttribute('disabled', 'disabled');
+            button.style.backgroundColor = 'grey';
+        })
+        })
     };
 
 const buttonErase = document.querySelector('.btn-ac');

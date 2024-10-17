@@ -66,6 +66,10 @@ html, body {
     cursor: pointer;
     transition: transform 0.2s ease;
 }
+.numBtn:hover, .opBtn:hover, .plus-minusBtn:hover {
+    background-color: rgb(88, 182, 150);
+    transform: scale(.95);
+}
 .btnEqual {
     grid-column: 3 / span 2;
     border-radius: 5px;
