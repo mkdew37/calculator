@@ -9,6 +9,7 @@ let result = '';
 let equation = '';
 let lastActionValidCalculation = false;
 
+const operators = ['+', '-', '*', '/'];
 const validEquation = /^(-?\d+\.?\d*)\s*([\+\-\*\/])\s*(-?\d+\.?\d*)$/;
 
 //DOM Elements
@@ -98,6 +99,17 @@ function calculateValidEquation(calculate)  {
     }
 };
 
+function initializeInput(buttonValue)   {
+    output.innerText = buttonValue;
+    equation = buttonValue;
+    currentOperator = buttonValue; 
+};
+
+function addToCurrentInput(buttonValue) {
+    output.innerText += buttonValue;
+    equation += buttonValue;
+    currentOperator = buttonValue;
+};
 //Event Listeners
 const plusMinusBtn = document.querySelector('.plus-minusBtn');
 plusMinusBtn.addEventListener('click', ()   =>  {
@@ -141,21 +153,16 @@ const opBtn = document.querySelectorAll('.opBtn');
         let buttonValue = event.target.innerText;
         if (divideByZero(num1, num2))   {
             return;
-        }
-        else if (output.innerText === '0') {
-            output.innerText = buttonValue;
-            equation = buttonValue;
-            currentOperator = buttonValue;
-            } else {
-                output.innerText += buttonValue;
-                equation += buttonValue;
-                currentOperator = buttonValue;
-            }
+        } 
+        output.innerText === '0' ?
+        initializeInput(buttonValue) : 
+        addToCurrentInput(buttonValue);
+
         checkEquation(equation);
-        calculateValidEquation(equation);  
-        equation = output.innerText;
+        calculateValidEquation(output.innerText);  
+        equation = output.innerText
         buttonDot.removeAttribute('disabled');
-        })
+        });
     };
 
 const buttonErase = document.querySelector('.btn-ac');
