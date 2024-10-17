@@ -135,14 +135,13 @@ const numBtn = document.querySelectorAll('.numBtn');
             let buttonValue = event.target.innerText;
             if (output.innerText === '0' && buttonValue === '.')    {
                 output.innerText = '0.';
-            }
+            }   
             output.innerText === '0' ?
             initializeInput(buttonValue) : 
             addToCurrentInput(buttonValue);
             checkEquation(equation);
             opBtn.forEach(button => {
-                button.removeAttribute('disabled', 'disabled');
-                button.style.backgroundColor = 'rgb(61, 207, 207)';
+                button.removeAttribute('disabled');
             })
         })
     };
@@ -164,7 +163,6 @@ const opBtn = document.querySelectorAll('.opBtn');
         buttonDot.removeAttribute('disabled');
         opBtn.forEach(button => {
             button.setAttribute('disabled', 'disabled');
-            button.style.backgroundColor = 'grey';
         })
         })
     };
@@ -179,7 +177,10 @@ const buttonErase = document.querySelector('.btn-ac');
         result = '';
         currentOperator = '';
         lastActionValidCalculation = false;
-        buttonDot.removeAttribute('disabled');
+        buttonDot.removeAttribute('disabled')
+        opBtn.forEach(button => {
+            button.removeAttribute('disabled');
+        })
     });
 
 const buttonDelete = document.querySelector('.btn-del');
@@ -209,8 +210,14 @@ buttonEqual.addEventListener('click', () => {
         operator = '';
         currentOperator = '';
         lastActionValidCalculation = false;
-        alert('This is not a valid equation.\nPlease try again.');
-    }  
+        alert('This is not a valid equation.\nPlease try again.')
+    }
+    if (String(result).includes('.'))   {
+        button.Dot.setAttribute('disabled', 'disabled');
+    }
+    opBtn.forEach(button => {
+        button.removeAttribute('disabled');
+    })
 });
 
 const buttonDot = document.querySelector('#dot');

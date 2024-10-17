@@ -66,9 +66,13 @@ html, body {
     cursor: pointer;
     transition: transform 0.2s ease;
 }
-.numBtn:hover, .opBtn:hover, .plus-minusBtn:hover {
+.numBtn:hover, .opBtn:hover, .plus-minusBtn:hover, .btnEqual:hover   {
     background-color: rgb(88, 182, 150);
     transform: scale(.95);
+}
+.opBtn:disabled, .plus-minusBtn:disabled, #dot:disabled {
+    background-color: grey;
+    cursor: not-allowed;
 }
 .btnEqual {
     grid-column: 3 / span 2;
@@ -86,10 +90,6 @@ html, body {
     font-size: 1em;
     cursor: pointer;
     transition: transform 0.2s ease;
-}
-.btn:hover, .btnEqual:hover {
-    background-color: rgb(88, 182, 150);
-    transform: scale(.95);
 }
 .btn-ac:hover, .btn-del:hover {
     background-color: rgb(216, 92, 70);
