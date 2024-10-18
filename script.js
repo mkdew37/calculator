@@ -130,7 +130,6 @@ function togglePlusMinusSign()   {
 
 function handleNumberButtonClick(event)  {
     let buttonValue = event.target.innerText;
-    console.log(equation);
     if (output.innerText === '0' && buttonValue === '.')    {
         output.innerText = '0.';
         return;
@@ -143,12 +142,10 @@ function handleNumberButtonClick(event)  {
 
 function handleOperatorButtonClick(event)   {
     let buttonValue = event.target.innerText;
-    console.log(equation);
     if (checkForDivisionByZero(num2, operator))   {
         return;
     }
-    output.innerText === '0' ?
-    setInitialInput(buttonValue) : 
+    output.innerText === '0'
     addToCurrentInput(buttonValue);
     validateEquation(equation);
     calculateResultIfValid(output.innerText);  
