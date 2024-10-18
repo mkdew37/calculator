@@ -54,7 +54,7 @@ function parseEquation(input)    {
         num2 = match.groups.secondNumber;
         operator = match.groups.operator
     }
-    if (checkForDivisionByZero(num1, num2, operator))   {
+    if (checkForDivisionByZero(num2, operator))   {
         return;
     }
     result = performOperation(operator, num1, num2);
@@ -65,8 +65,8 @@ function parseEquation(input)    {
     output.innerText = result
 };
 
-function checkForDivisionByZero(x, y, operator) {
-    if (x === '0' || y === '0' && operator === '/') {
+function checkForDivisionByZero(y, operator) {
+    if (operator === '/' && y === '0') {
         output.innerText = '0';
         equation = '';
         result = '';
@@ -130,6 +130,7 @@ function togglePlusMinusSign()   {
 
 function handleNumberButtonClick(event)  {
     let buttonValue = event.target.innerText;
+    console.log(equation);
     if (output.innerText === '0' && buttonValue === '.')    {
         output.innerText = '0.';
         return;
@@ -142,7 +143,8 @@ function handleNumberButtonClick(event)  {
 
 function handleOperatorButtonClick(event)   {
     let buttonValue = event.target.innerText;
-    if (checkForDivisionByZero(num1, num2, operator))   {
+    console.log(equation);
+    if (checkForDivisionByZero(num2, operator))   {
         return;
     }
     output.innerText === '0' ?
