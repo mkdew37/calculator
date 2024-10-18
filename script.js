@@ -163,6 +163,10 @@ function handleOperatorButtonClick(event)   {
 function deleteLastCharacter()  {
     if (output.innerText.length === 1)  {
         output.innerText = '0';
+        equation = '';
+        operator = '';
+        currentOperator = '';
+        lastActionValidCalculation = false;
     }
     else    {
         let numberToString = output.innerText.toString();
@@ -248,10 +252,30 @@ buttonEqual.addEventListener('click', () => {
 const buttonDot = document.querySelector('#dot');
 buttonDot.addEventListener('click', ()  =>  {
 buttonDot.setAttribute('disabled', 'disabled');
-});
+})
 
 //Keyboard Event Listeners
-//Equal Button (Enter)
-        
-
+document.addEventListener('keydown', (event)  =>  {
+    if (event.key === 'Enter') {
+        key = equalButton();
+    } else if (event.key === 'NumpadEnter') {
+        key = equalButton();
+    } else if (event.key === 'Backspace') {
+        key = deleteLastCharacter();
+    } else if (event.key === 'Delete') {
+        key = clearInputButton();
+    } else if (event.key === 'Escape') {
+        key = clearInputButton();
+    } else if ((event.key >= '0' && event.key <= '9') || event.key === '.') {
+        handleNumberButtonClick({
+            target: {innerText : event.key}
+        });
+       event.preventDefault();
+    } else if (['+', '-', '*', '/'].includes(event.key))    {
+        handleOperatorButtonClick({
+            target: {innerText : event.key}
+        });
+        event.preventDefault();
+    }   
+});
 });
