@@ -75,9 +75,10 @@ function checkForDivisionByZero(y, operator) {
         operator = '';
         currentOperator = '';
         lastActionValidCalculation = false;
-        alert("Hey! I see what you did there, you tried to break my calculator.\nPlease do not try and divide anything by 0.");
+        alert("Division by zero is not allowed.\nPlease enter a valid divisor.");
         return true;
     }
+    return false;
 };
 
 function isValidEquation(testEquation)  {
