@@ -133,7 +133,10 @@ function handleNumberButtonClick(event)  {
     if (output.innerText === '0' && buttonValue === '.')    {
         output.innerText = '0.';
         return;
-    }   
+    }
+    if (buttonValue === '.')    {
+
+    }
     output.innerText === '0' ?
     setInitialInput(buttonValue) : 
     addToCurrentInput(buttonValue);
@@ -147,7 +150,7 @@ function handleOperatorButtonClick(event)   {
     let buttonValue = event.target.innerText;
     if (checkForDivisionByZero(num1, num2))   {
         return;
-    } 
+    }
     output.innerText === '0' ?
     setInitialInput(buttonValue) : 
     addToCurrentInput(buttonValue);
@@ -212,6 +215,7 @@ function equalButton()  {
     String(result).includes('.') ? buttonDot.setAttribute('disabled', 'disabled') : 
                                                     buttonDot.removeAttribute('disabled'); 
 };
+
 //Mouse Event Listeners
 
 //Toggle Plus/Minus
@@ -267,11 +271,23 @@ document.addEventListener('keydown', (event)  =>  {
     } else if (event.key === 'Escape') {
         key = clearInputButton();
     } else if ((event.key >= '0' && event.key <= '9') || event.key === '.') {
+        if (event.key === '.' && buttonDot.disabled)  {
+            return;
+        }
+        if (event.key === '.')  {
+            buttonDot.setAttribute('disabled', 'disabled');
+        }
         handleNumberButtonClick({
             target: {innerText : event.key}
         });
        event.preventDefault();
     } else if (['+', '-', '*', '/'].includes(event.key))    {
+        if (event.key === (['+', '-', '*', '/']) && opBtn.disabled)  {
+            return;
+        }
+        if (event.key === (['+', '-', '*', '/']))  {
+            opBtn.setAttribute('disabled', 'disabled');
+        }
         handleOperatorButtonClick({
             target: {innerText : event.key}
         });
