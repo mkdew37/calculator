@@ -158,9 +158,6 @@ function handleOperatorButtonClick(event)   {
     calculateResultIfValid(output.innerText);  
     equation = output.innerText
     buttonDot.removeAttribute('disabled');
-    opBtn.forEach(button => {
-        button.setAttribute('disabled', 'disabled');
-    })
 };
 
 function deleteLastCharacter()  {
@@ -282,16 +279,10 @@ document.addEventListener('keydown', (event)  =>  {
         });
        event.preventDefault();
     } else if (['+', '-', '*', '/'].includes(event.key))    {
-        if (event.key === (['+', '-', '*', '/']) && opBtn.disabled)  {
-            return;
-        }
-        if (event.key === (['+', '-', '*', '/']))  {
-            opBtn.setAttribute('disabled', 'disabled');
-        }
         handleOperatorButtonClick({
             target: {innerText : event.key}
         });
         event.preventDefault();
-    }   
+    }
 });
 });
