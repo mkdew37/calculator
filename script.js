@@ -54,7 +54,7 @@ function parseEquation(input)    {
         num2 = match.groups.secondNumber;
         operator = match.groups.operator
     }
-    if (checkForDivisionByZero(num1, num2))   {
+    if (checkForDivisionByZero(num1, num2, operator))   {
         return;
     }
     result = performOperation(operator, num1, num2);
@@ -65,8 +65,8 @@ function parseEquation(input)    {
     output.innerText = result
 };
 
-function checkForDivisionByZero(x, y) {
-    if (x === '0' || y === '0') {
+function checkForDivisionByZero(x, y, operator) {
+    if (x === '0' || y === '0' && operator === '/') {
         output.innerText = '0';
         equation = '';
         result = '';
@@ -142,7 +142,7 @@ function handleNumberButtonClick(event)  {
 
 function handleOperatorButtonClick(event)   {
     let buttonValue = event.target.innerText;
-    if (checkForDivisionByZero(num1, num2))   {
+    if (checkForDivisionByZero(num1, num2, operator))   {
         return;
     }
     output.innerText === '0' ?
