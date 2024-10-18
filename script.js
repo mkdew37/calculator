@@ -134,16 +134,10 @@ function handleNumberButtonClick(event)  {
         output.innerText = '0.';
         return;
     }
-    if (buttonValue === '.')    {
-
-    }
     output.innerText === '0' ?
     setInitialInput(buttonValue) : 
     addToCurrentInput(buttonValue);
     validateEquation(equation);
-    opBtn.forEach(button => {
-        button.removeAttribute('disabled');
-    })
 };
 
 function handleOperatorButtonClick(event)   {
@@ -165,6 +159,7 @@ function deleteLastCharacter()  {
         output.innerText = '0';
         equation = '';
         operator = '';
+        result = '';
         currentOperator = '';
         lastActionValidCalculation = false;
     }
@@ -172,6 +167,13 @@ function deleteLastCharacter()  {
         let numberToString = output.innerText.toString();
         let deleteLast = numberToString.slice(0, numberToString.length - 1);
         output.innerText = deleteLast;
+        if (['+', '-', '*', '/'].includes(numberToString[numberToString.length - 1])) {
+            currentOperator = '';
+            operator = '';
+            lastActionValidCalculation = false;
+        }
+        output.innerText = deleteLast || '0';
+        equation = deleteLast || '';
     }
 };
 
