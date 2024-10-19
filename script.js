@@ -55,20 +55,21 @@ function parseEquation(input)    {
         operator = match.groups.operator
     }
     if (checkForDivisionByZero(num2, operator))   {
+        clearAll();
         return;
     }
     result = performOperation(operator, num1, num2);
     if (String(result).includes('.'))    {
-        let roundedResult = Math.round(result * 100) / 100;
+        let roundedResult = Math.round(result * 10) / 10;
         return output.innerText = roundedResult;
     }
     output.innerText = result;
+    equation = '';
 };
 
 function checkForDivisionByZero(y, operator) {
     if (operator === '/' && y === '0') {
         alert("Division by zero is not allowed.\nPlease enter a valid divisor.");
-        clearAll();
         return true;
     }
     return false;
@@ -79,7 +80,6 @@ function isValidEquation(testEquation)  {
 };
 
 function validateEquation(equation)  {
-    lastActionValidCalculation = false;
     if (isValidEquation(equation))    {
         lastActionValidCalculation = true;
     }
@@ -88,7 +88,7 @@ function validateEquation(equation)  {
 function calculateResultIfValid(calculate)  {
     if(lastActionValidCalculation) {
         parseEquation(equation);
-        output.innerText = result + currentOperator;
+        output.innerText = Math.round(result * 10) / 10 + currentOperator;
         lastActionValidCalculation = false;
     }
 };
@@ -138,12 +138,13 @@ function handleNumberButtonClick(event)  {
 function handleOperatorButtonClick(event)   {
     let buttonValue = event.target.innerText;
     if (checkForDivisionByZero(num2, operator))   {
+        clearAll();
         return;
     }
         addToCurrentInput(buttonValue);
         validateEquation(equation);
         calculateResultIfValid(output.innerText);  
-        equation = output.innerText
+        equation = output.innerText;
         buttonDot.removeAttribute('disabled');
 };
 
@@ -188,8 +189,6 @@ function equalButton()  {
     validateEquation(output.innerText)
     if (lastActionValidCalculation === true)    {
         parseEquation(output.innerText);
-        equation = '';
-        output.innerText = result;
     }   else    {
         clearAll();
         alert('This is not a valid equation.\nPlease try again.')
