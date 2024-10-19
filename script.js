@@ -9,7 +9,7 @@ let result = '';
 let equation = '';
 let lastActionValidCalculation = false;
 
-const validEquation = /^(-?\d+\.?\d*)\s*([\+\-\*\/])\s*(-?\d+\.?\d*)$/;
+const validEquation = /^(-?(0|[1-9]\d*)(\.\d*)?)\s*([\+\-\*\/])\s*(-?(0|[1-9]\d*)(\.\d*)?)$/;
 
 //DOM Elements
 const output = document.getElementById('output');
@@ -67,9 +67,8 @@ function parseEquation(input)    {
 
 function checkForDivisionByZero(y, operator) {
     if (operator === '/' && y === '0') {
-        clearAll();
-        output.innerText = '0';
         alert("Division by zero is not allowed.\nPlease enter a valid divisor.");
+        clearAll();
         return true;
     }
     return false;
@@ -80,6 +79,7 @@ function isValidEquation(testEquation)  {
 };
 
 function validateEquation(equation)  {
+    lastActionValidCalculation = false;
     if (isValidEquation(equation))    {
         lastActionValidCalculation = true;
     }
@@ -140,17 +140,15 @@ function handleOperatorButtonClick(event)   {
     if (checkForDivisionByZero(num2, operator))   {
         return;
     }
-    output.innerText === '0'
-    addToCurrentInput(buttonValue);
-    validateEquation(equation);
-    calculateResultIfValid(output.innerText);  
-    equation = output.innerText
-    buttonDot.removeAttribute('disabled');
+        addToCurrentInput(buttonValue);
+        validateEquation(equation);
+        calculateResultIfValid(output.innerText);  
+        equation = output.innerText
+        buttonDot.removeAttribute('disabled');
 };
 
 function deleteLastCharacter()  {
     if (output.innerText.length === 1)  {
-        output.innerText = '0';
         clearAll();
     }
     else    {
@@ -168,7 +166,6 @@ function deleteLastCharacter()  {
 };
 
 function clearInputButton() {
-    output.innerText = '0';
     clearAll();
     buttonDot.removeAttribute('disabled')
     opBtn.forEach(button => {
@@ -184,6 +181,7 @@ function clearAll() {
     result = '';
     equation = '';
     lastActionValidCalculation = false;
+    output.innerText = '0';
 }
 
 function equalButton()  {
@@ -193,7 +191,6 @@ function equalButton()  {
         equation = '';
         output.innerText = result;
     }   else    {
-        output.innerText = '0';
         clearAll();
         alert('This is not a valid equation.\nPlease try again.')
     }
