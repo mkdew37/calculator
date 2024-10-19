@@ -62,19 +62,13 @@ function parseEquation(input)    {
         let roundedResult = Math.round(result * 100) / 100;
         return output.innerText = roundedResult;
     }
-    output.innerText = result
+    output.innerText = result;
 };
 
 function checkForDivisionByZero(y, operator) {
     if (operator === '/' && y === '0') {
+        clearAll();
         output.innerText = '0';
-        equation = '';
-        result = '';
-        num1 = '';
-        num2 = '';
-        operator = '';
-        currentOperator = '';
-        lastActionValidCalculation = false;
         alert("Division by zero is not allowed.\nPlease enter a valid divisor.");
         return true;
     }
@@ -157,11 +151,7 @@ function handleOperatorButtonClick(event)   {
 function deleteLastCharacter()  {
     if (output.innerText.length === 1)  {
         output.innerText = '0';
-        equation = '';
-        operator = '';
-        result = '';
-        currentOperator = '';
-        lastActionValidCalculation = false;
+        clearAll();
     }
     else    {
         let numberToString = output.innerText.toString();
@@ -179,33 +169,32 @@ function deleteLastCharacter()  {
 
 function clearInputButton() {
     output.innerText = '0';
-    num1 = '';
-    num2 = '';
-    operator = '';
-    equation = '';
-    result = '';
-    currentOperator = '';
-    lastActionValidCalculation = false;
+    clearAll();
     buttonDot.removeAttribute('disabled')
     opBtn.forEach(button => {
         button.removeAttribute('disabled');
     })
 };
 
+function clearAll() {
+    num1 = '';
+    num2 = '';
+    operator = '';
+    currentOperator = '';
+    result = '';
+    equation = '';
+    lastActionValidCalculation = false;
+}
+
 function equalButton()  {
     validateEquation(output.innerText)
     if (lastActionValidCalculation === true)    {
         parseEquation(output.innerText);
-        equation = output.innerText;
+        equation = '';
+        output.innerText = result;
     }   else    {
         output.innerText = '0';
-        equation = '';
-        result = '';
-        num1 = '';
-        num2 = '';
-        operator = '';
-        currentOperator = '';
-        lastActionValidCalculation = false;
+        clearAll();
         alert('This is not a valid equation.\nPlease try again.')
     }
     opBtn.forEach(button => {
