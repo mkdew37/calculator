@@ -19,6 +19,8 @@
 - Addition, subtraction, multiplication and division
 - Support for negative numbers
 - Validate equations
+- Multiple operations supported if pressing an operator
+- +/- toggle button
 - Disable decimal button if clicked
 - Results containing a decimal is rounded to 1 decimal
 - Fully implemented backspace button
@@ -32,9 +34,15 @@
 -  Enter = Equal Button
 
 ## What I have learned:
-
+-  Use regex patterns to validate and parse mathematical expressions
+-  Keyboard events
+-  Using media queries to make the calculator responsive to both 1080p and 3440x1440p
+-  Using getFullYear method to update copyright footer
+-  Chained ogether CSS rules to minimize code
+-  Use more functions instead of repeating code
 
 ## Acknowledgments:
+-  This project was inspired by <a href="https://www.theodinproject.com">The Odin Project</a>
 
 
 
